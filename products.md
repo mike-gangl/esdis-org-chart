@@ -21,3 +21,9 @@
 | EGIS | Visualization | TBD | TBD | TBD | |
 | FIRMS | Visualization | TBD | TBD | TBD | |
 | Enterprise Tools Repository | Metrics | TBD | TBD | TBD | |
+| ICDs | Systems Engineering | TBD | TBD | TBD | Interface Control Documents |
+| Systems Engineering Management Plan (SEMP) | Systems Engineering | TBD | TBD | TBD | |
+| Configuration Management (CM) Plan | Systems Engineering | TBD | TBD | TBD | |
+| System Architecture Diagram (SAD) | Systems Engineering | TBD | TBD | TBD | |
+| System Requirements Document (SRD) | Systems Engineering | TBD | TBD | TBD | |
+| Risk Register | Systems Engineering | TBD | TBD | TBD | |
