@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ESDIS 3.0 Org Chart</title>
+<style>
+  :root{--unit:#1f3a5f;--team:#2f6f9f;--council:#7a4fa3;--wg:#b5701f;--role:#5f6b7a;--ext:#6b6b6b;--gap:#c0392b;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.4 -apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:#1c2430}
+  header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #d6dce5;padding:10px 16px}
+  h1{font-size:18px;margin:0 0 8px}
+  .bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  button,input[type=search]{font:inherit;padding:5px 10px;border:1px solid #b9c3d0;border-radius:6px;background:#fff;cursor:pointer}
+  button:hover{background:#eef2f7}
+  input[type=search]{cursor:text;min-width:200px}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;font-size:12px}
+  .legend label{display:flex;align-items:center;gap:4px;cursor:pointer}
+  .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+  main{padding:16px;max-width:1100px;margin:0 auto}
+  .node{margin:6px 0}
+  .head{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #cfd7e2;border-left:6px solid var(--c,#999);border-radius:6px;padding:6px 10px;cursor:default}
+  .node.has-kids>.head{cursor:pointer}
+  .node.has-kids>.head:hover{background:#f0f5fb}
+  .chev{width:14px;color:#667;font-size:12px;flex:none;text-align:center}
+  .title{font-weight:600}
+  .note{color:#556;font-size:12.5px}
+  .count{margin-left:auto;font-size:11px;color:#667;background:#eef1f5;border-radius:10px;padding:1px 8px;flex:none}
+  .badge{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:#fff;background:var(--c,#999);border-radius:3px;padding:1px 5px;flex:none}
+  .kids{margin-left:18px;padding-left:12px;border-left:2px solid #cfd7e2}
+  .node.collapsed>.kids{display:none}
+  .node.unit>.head:hover{background:#2a4d7c!important}
+  .node.unit>.head{background:var(--unit);color:#fff;border-color:var(--unit);font-size:15px}
+  .node.unit>.head .note,.node.unit>.head .count,.node.unit>.head .chev{color:#dbe6f3}
+  .node.unit>.head .count{background:rgba(255,255,255,.15)}
+  .node.gap>.head{border-style:dashed;background:#fff6f5}
+  .hide{display:none!important}
+  mark{background:#ffe58a}
+  #edit{display:none;padding:10px 16px;background:#fff;border-bottom:1px solid #d6dce5}
+  #edit textarea{width:100%;height:260px;font:12.5px/1.4 ui-monospace,Menlo,Consolas,monospace;padding:8px;border:1px solid #b9c3d0;border-radius:6px}
+  #err{color:#c0392b;margin-top:4px}
+</style>
+</head>
+<body>
+<header>
+  <h1>ESDIS 3.0 Organization</h1>
+  <div class="bar">
+    <button id="expandAll">Expand all</button>
+    <button id="collapseAll">Collapse all</button>
+    <button data-lvl="1">Level 1</button>
+    <button data-lvl="2">Level 2</button>
+    <button data-lvl="3">Level 3</button>
+    <input type="search" id="q" placeholder="Search teams, tools, roles...">
+    <button id="editBtn">Live edit</button>
+    <button id="dl">Download org.md</button>
+  </div>
+  <div class="legend" id="legend"></div>
+</header>
+<section id="edit">
+  <textarea id="src" spellcheck="false"></textarea>
+  <div id="err"></div>
+  <div class="note">Edits here are only in your browser. To make them permanent, copy them into <code>org.md</code> in the repo.</div>
+</section>
+<main id="root"></main>
+
+<script>
+const TYPES={unit:['Unit','--unit'],team:['Team','--team'],council:['Council','--council'],wg:['Working group','--wg'],role:['Role / function','--role'],ext:['Outside ESDIS','--ext'],gap:['To be added','--gap']};
+const $=s=>document.querySelector(s);
+let text='';
+
+function parse(t){
+  const roots=[],stack=[];
+  t.split('\n').forEach((raw,i)=>{
+    if(!raw.trim()||raw.trim().startsWith('#'))return;
+    const m=raw.match(/^(\s*)-\s+(.*)$/);
+    if(!m)throw new Error('Line '+(i+1)+': expected "- Title" -> '+raw.trim());
+    const depth=Math.floor(m[1].length/2);
+    let body=m[2],type='';
+    const tm=body.match(/\{(\w+)\}\s*$/);
+    if(tm){type=tm[1];body=body.slice(0,tm.index).trim();}
+    const [title,...rest]=body.split(' | ');
+    const n={title:title.trim(),note:rest.join(' | ').trim(),type,kids:[]};
+    if(depth>stack.length)throw new Error('Line '+(i+1)+': indent jumps more than one level');
+    stack.length=depth;
+    (depth?stack[depth-1].kids:roots).push(n);
+    stack[depth]=n;
+  });
+  return roots;
+}
+function count(n){return n.kids.reduce((a,k)=>a+1+count(k),0)}
+function build(n,depth){
+  const el=document.createElement('div');
+  const type=TYPES[n.type]?n.type:(n.kids.length?'team':'role');
+  el.className='node '+type+(n.kids.length?' has-kids':'');
+  el.dataset.type=type;el.dataset.depth=depth;
+  el.style.setProperty('--c','var('+TYPES[type][1]+')');
+  const h=document.createElement('div');h.className='head';
+  h.innerHTML=`<span class="chev">${n.kids.length?'▾':''}</span><span class="title"></span>${n.note?'<span class="note"></span>':''}<span class="badge">${TYPES[type][0]}</span>${n.kids.length?`<span class="count">${count(n)}</span>`:''}`;
+  h.querySelector('.title').textContent=n.title;
+  if(n.note)h.querySelector('.note').textContent='– '+n.note;
+  el.appendChild(h);
+  if(n.kids.length){
+    const k=document.createElement('div');k.className='kids';
+    n.kids.forEach(c=>k.appendChild(build(c,depth+1)));
+    el.appendChild(k);
+    h.onclick=()=>setCollapsed(el,!el.classList.contains('collapsed'));
+  }
+  return el;
+}
+function setCollapsed(el,c){el.classList.toggle('collapsed',c);const ch=el.querySelector(':scope>.head .chev');if(ch)ch.textContent=c?'▸':'▾';}
+function render(){
+  const root=$('#root');root.innerHTML='';
+  try{parse(text).forEach(n=>root.appendChild(build(n,1)));$('#err').textContent='';}
+  catch(e){$('#err').textContent=e.message;return;}
+  showLevel(2);applyFilters();
+}
+function showLevel(l){document.querySelectorAll('.node.has-kids').forEach(el=>setCollapsed(el,+el.dataset.depth>=l));}
+function applyFilters(){
+  const q=$('#q').value.trim().toLowerCase();
+  const off=new Set([...document.querySelectorAll('#legend input')].filter(i=>!i.checked).map(i=>i.value));
+  const nodes=[...document.querySelectorAll('.node')];
+  nodes.forEach(n=>n.classList.remove('hide'));
+  document.querySelectorAll('mark').forEach(m=>m.replaceWith(m.textContent));
+  nodes.forEach(n=>{if(off.has(n.dataset.type))n.classList.add('hide');});
+  if(q){
+    const match=n=>(n.querySelector(':scope>.head .title').textContent+' '+(n.querySelector(':scope>.head .note')?.textContent||'')).toLowerCase().includes(q);
+    const vis=n=>{const kids=[...n.querySelectorAll(':scope>.kids>.node')];const k=kids.map(vis).some(Boolean);const me=match(n);
+      if(!me&&!k)n.classList.add('hide');
+      if(k)setCollapsed(n,false);
+      return me||k;};
+    document.querySelectorAll('#root>.node').forEach(vis);
+  }
+}
+function init(){
+  $('#legend').innerHTML=Object.entries(TYPES).map(([k,v])=>`<label><input type="checkbox" value="${k}" checked><span class="sw" style="background:var(${v[1]})"></span>${v[0]}</label>`).join('');
+  $('#legend').onchange=applyFilters;
+  $('#q').oninput=applyFilters;
+  $('#expandAll').onclick=()=>showLevel(99);
+  $('#collapseAll').onclick=()=>showLevel(1);
+  document.querySelectorAll('[data-lvl]').forEach(b=>b.onclick=()=>showLevel(+b.dataset.lvl));
+  $('#editBtn').onclick=()=>{const e=$('#edit');e.style.display=e.style.display==='block'?'none':'block';};
+  $('#src').oninput=e=>{text=e.target.value;render();};
+  $('#dl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/markdown'}));a.download='org.md';a.click();};
+  fetch('org.md',{cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.text()})
+    .then(t=>{text=t;$('#src').value=t;render();})
+    .catch(()=>{$('#root').innerHTML='<p>Could not load <code>org.md</code>. If you opened this file directly, serve the folder instead (<code>python3 -m http.server</code>) or view it on GitHub Pages.</p>';});
+}
+init();
+</script>
+</body>
+</html>

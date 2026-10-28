@@ -1,0 +1,106 @@
+# Syntax: indent 2 spaces per level.  "- Title | note {type}"
+# Types: unit, team, council, wg, role, ext, gap (placeholder / to be added). Lines starting with # are comments.
+- ESDIS Project Office | GSFC Flight Projects Directorate; reports to NASA HQ ESDS Program {unit}
+  - Project Manager (GSFC) {role}
+  - Enterprise Project Scientist {role}
+  - Deputy PM for Systems (DPM-S) | also PM of FDP; leads risk, opportunities, architecture {role}
+  - Deputy PM for Resources (DPM-R) | supervises Finance; manages project admin support {role}
+  - Administration team {team}
+  - Finance team {team}
+  - Governance bodies
+    - Data Standards Council | chaired by PM or designee; supports Data Stewardship {council}
+    - ASSET Management Council | supports Science Enablement {council}
+    - Enterprise Service Council | exec sponsor = Enterprise Services lead {council}
+      - Members | Data Stewardship (Mission Engagement, Metadata Stewardship), SE Lead Scientist, Systems Engineering, User Support, Openscapes, Enterprise Services, ASSET Tool Reps {role}
+      - Tool lifecycle tiers | Tier 1 Sustain; Tier 2 Transition (open source via Openscapes); Tier 3 Retire {gap}
+    - Ad Hoc Working Groups | need sub-org champion + PM approval; fewer than 8 members {wg}
+    - Enterprise Portfolio Board | referenced for funding proposals; not described in PMP {gap}
+    - Change Control Board (CCB) | referenced in PMP document table; not described {gap}
+
+- Systems Engineering | ESDIS Systems and Software Engineering Team (ESSET) {unit}
+  - Software Systems Engineer {role}
+  - Systems Architect {role}
+  - AI Architect {role}
+  - Science Systems Engineer | liaison to ASSETs and Data Stewardship {role}
+  - Other SE staff (V&V, Project SE, I&A SE) | to be added {gap}
+
+- Data Stewardship {unit}
+  - Leadership | Stewardship Lead (co-lead), Data Governance Lead, Mission Lifecycle Coordinator, Data Producer Support Coordinator {role}
+  - Data Lifecycle Management | teams mirror the ASSETs / ESSRP spheres {team}
+    - Mission Engagement {team}
+      - Mission Stewardship Leads (MSLs) | grouped by ASSET {role}
+      - SOAR - Suborbital Archive Readiness Team {team}
+    - Data Publication {team}
+      - Metadata & Document Curators {role}
+      - Data Engineers {role}
+    - Long-Term Archival {team}
+  - Data Governance | products approved by Data Standards Council {team}
+    - Metadata Stewardship Team {team}
+    - Data Interoperability Team {team}
+    - Stewardship Processes Team | MLP, DLP, Data Accession Process, LoS Model {team}
+    - Data Standards WGs / tiger teams | time-boxed {wg}
+  - Data Producer Support | works with ESDIS Connect {team}
+    - Guidance & Enablement {role}
+    - Needs-Driven Support {role}
+    - Long-Term Data Stewardship {role}
+
+- Science Enablement | External SE, User Needs, User Support, Internal Enterprise Science Support {unit}
+  - Leadership Team (6) {team}
+    - Science Enablement Lead | chairs ASSET Science Council {role}
+    - Science Enablement Lead Scientist {role}
+    - Applications Liaison | Earth Action link {role}
+    - ESDIS Connect Strategist | liaison to ESDS Connections {role}
+    - User Needs Coordinator | core of User Needs Team {role}
+    - Openscapes Team Lead {role}
+  - ASSETs | aligned to ESSRP spheres {team}
+    - Atmosphere ASSET {team}
+    - Hydrosphere ASSET | PO.DAAC 100%; GES DISC 40%; GHRC 30% {team}
+    - Cryosphere ASSET {team}
+    - Biosphere ASSET {team}
+    - Geosphere ASSET {team}
+    - X-ASSET (SAR + Geodesy) | own Science and User Needs teams; equal standing {team}
+    - Inside every ASSET
+      - ASSET Lead | programmatic management; nominates Science Council rep {role}
+      - Science Data Support (ASSET Science Team) | Scientific Guidance, External SE, Internal Science Support {team}
+      - User Needs / User Support (ASSET User Support Team) | help desk, Forum, requirements capture, use cases {team}
+      - ASSET User Working Group (UWG) | biannual meetings {wg}
+  - Cross-ASSET groups
+    - ASSET Science Council | formerly DAAC Scientist Council {council}
+    - User Needs Team {team}
+    - Consolidated User Support Team | cross-ASSET enterprise support, outside the ASSETs {team}
+    - ESDIS Connect | liaison to ESDS Connections {team}
+      - Coordination {role}
+      - User Development Materials {role}
+      - Content Quality {role}
+      - Support & Enablement {role}
+      - Continuous Improvement {role}
+    - Openscapes Team | administratively in Science Enablement {team}
+      - Championing open science {role}
+      - Breaking down silos {role}
+      - Guiding open governance (earthaccess model) {role}
+  - Events and cadence
+    - Earthdata UWG Summit | annual {wg}
+    - ASSET town halls | biannual {wg}
+    - Stakeholder meetings | 2+ per ASSET per year {wg}
+  - Value-added products | stay in ASSETs; annual list to FDP {role}
+
+- Enterprise Services | Agile / SAFe; Enterprise Tools Repository; TDE workflow {unit}
+  - Leadership | Lead, Systems Engineer, Portfolio Lead, System-Level Scrum Master {role}
+  - UI/UX Team | within Enterprise Services leadership {team}
+  - Core Tools and Services {team}
+    - I&A (Ingest & Archive) | Cumulus, Earthdata Pub, Cloud Upload Environment, data quality/preservation {team}
+      - Sub-teams (e.g., Data Operations, Cumulus Core, Task Team) | to be added {gap}
+    - Discovery and Distribution | Harmony, AppEEARS, Vertex, LANCE, Earthdata Search, Earthdata Login, CMR {team}
+      - Sub-teams | to be added {gap}
+    - Visualization | Worldview/GIBS, EGIS, FIRMS {team}
+      - Sub-teams | to be added {gap}
+  - Infrastructure Services {team}
+    - Cloud Platform | GAP/SCIP, networks, security {team}
+    - Metrics | logs, BI, Enterprise Tools Repository {team}
+    - CI/CD, Earthdata Code Collaborative | infrastructure examples in PMP {gap}
+
+- Outside ESDIS (referenced in PMP) {ext}
+  - FDP - Foundational Data Product | takes over SIPS; DPM-S is its PM {ext}
+  - EED-3 | enterprise engineering contract {ext}
+  - ESDS Connections / Digital Strategy and User Development {ext}
+  - Earth Action, ESSRP program scientists, NASA ARSET, Mission Science Teams {ext}
