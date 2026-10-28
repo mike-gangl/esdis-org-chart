@@ -12,7 +12,6 @@
     - ASSET Management Council | supports Science Enablement {council}
     - Enterprise Service Council | exec sponsor = Enterprise Services lead {council}
       - Members | Data Stewardship (Mission Engagement, Metadata Stewardship), SE Lead Scientist, Systems Engineering, User Support, Openscapes, Enterprise Services, ASSET Tool Reps {role}
-      - Tool lifecycle tiers | Tier 1 Sustain; Tier 2 Transition (open source via Openscapes); Tier 3 Retire {gap}
     - Ad Hoc Working Groups | need sub-org champion + PM approval; fewer than 8 members {wg}
     - Enterprise Portfolio Board | referenced for funding proposals; not described in PMP {gap}
     - Change Control Board (CCB) | referenced in PMP document table; not described {gap}
