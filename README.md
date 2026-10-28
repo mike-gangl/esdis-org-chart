@@ -2,6 +2,8 @@
 
 Interactive, collapsible org chart built from a plain-text outline.
 
+[Webview of ESDIS 3.0 org chart](https://mike-gangl.github.io/esdis-org-chart/)
+
 - `org.md` is the single source of truth. Edit this file.
 - `index.html` renders it. No build step, no dependencies.
 
