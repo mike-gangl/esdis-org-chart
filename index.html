@@ -34,6 +34,27 @@
   .node.unit>.head .note,.node.unit>.head .count,.node.unit>.head .chev{color:#dbe6f3}
   .node.unit>.head .count{background:rgba(255,255,255,.15)}
   .node.gap>.head{border-style:dashed;background:#fff6f5}
+  .views{display:flex;border:1px solid #b9c3d0;border-radius:6px;overflow:hidden}
+  .views button{border:0;border-radius:0}
+  .views button.on{background:var(--unit);color:#fff}
+  .pc{font-size:11px;color:var(--team);background:#e6f0fa;border-radius:10px;padding:1px 8px;flex:none;cursor:pointer}
+  .node.unit>.head .pc{background:rgba(255,255,255,.15);color:#fff}
+  .prods{margin:4px 0 6px 28px;display:flex;flex-wrap:wrap;gap:6px}
+  .prods span{background:#fff;border:1px solid #cfd7e2;border-radius:10px;padding:2px 9px;font-size:12px}
+  .node.hl>.head{box-shadow:0 0 0 3px #ffd34d}
+  .node.sup>.head{box-shadow:0 0 0 3px #7fd1c7}
+  body[data-view=product] main{max-width:1500px;display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,520px);gap:16px;align-items:start}
+  body[data-view=product] #root{grid-column:1;grid-row:1}
+  #prodview{padding-bottom:8px}
+  body[data-view=product] #prodview{grid-column:2;grid-row:1;position:sticky;top:calc(var(--hdr,100px) + 16px);max-height:calc(100vh - var(--hdr,100px) - 32px);overflow:auto;background:#fff;border:1px solid #d6dce5;border-radius:6px;padding:10px 12px}
+  body[data-view=product] #ptable th{position:sticky;top:0;z-index:1}
+  @media (max-width:900px){body[data-view=product] main{display:block}body[data-view=product] #prodview{position:static;max-height:none;margin-bottom:16px}}
+  #ptable{width:100%;border-collapse:collapse;background:#fff;font-size:13px;margin-bottom:6px}
+  #ptable th,#ptable td{border-bottom:1px solid #e1e6ee;padding:6px 8px;text-align:left}
+  #ptable th{background:#eef2f7;font-weight:600}
+  #ptable tbody tr{cursor:pointer}
+  #ptable tbody tr:hover{background:#f0f5fb}
+  #ptable tbody tr.sel{background:#fff3c4}
   .hide{display:none!important}
   mark{background:#ffe58a}
   #edit{display:none;padding:10px 16px;background:#fff;border-bottom:1px solid #d6dce5}
@@ -45,6 +66,10 @@
 <header>
   <h1>ESDIS 3.0 Organization</h1>
   <div class="bar">
+    <div class="views">
+      <button id="vOrg" class="on">Org view</button>
+      <button id="vProd">Product view</button>
+    </div>
     <button id="expandAll">Expand all</button>
     <button id="collapseAll">Collapse all</button>
     <button data-lvl="1">Level 1</button>
@@ -61,12 +86,23 @@
   <div id="err"></div>
   <div class="note">Edits here are only in your browser. To make them permanent, copy them into <code>org.md</code> in the repo.</div>
 </section>
-<main id="root"></main>
+<main>
+  <section id="prodview" style="display:none">
+    <input type="search" id="pq" placeholder="Filter products..." style="width:100%;margin-bottom:8px">
+    <table id="ptable">
+      <thead><tr><th>Product</th><th>Owning team</th><th>Tier</th><th>Champion</th><th>Hosting</th><th>Notes</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="note">Click a product to highlight its owning team (gold) and champion (teal) in the tree. Click a team's product count in Org view to list its products.</div>
+  </section>
+  <div id="root"></div>
+</main>
 
 <script>
 const TYPES={unit:['Unit','--unit'],team:['Team','--team'],council:['Council','--council'],wg:['Working group','--wg'],role:['Role / function','--role'],ext:['Outside ESDIS','--ext'],gap:['To be added','--gap']};
 const $=s=>document.querySelector(s);
 let text='';
+let products=[],view='org',sel=null;
 
 function parse(t){
   const roots=[],stack=[];
@@ -87,6 +123,12 @@ function parse(t){
   });
   return roots;
 }
+function parseProducts(t){
+  const rows=t.split('\n').filter(l=>l.trim().startsWith('|')).map(l=>l.trim().replace(/^\||\|$/g,'').split('|').map(c=>c.trim()));
+  const keys=['product','owner','tier','champion','hosting','notes'];
+  return rows.slice(1).filter(r=>!r.every(c=>/^:?-+:?$/.test(c))).map(r=>Object.fromEntries(keys.map((k,i)=>[k,r[i]||''])));
+}
+function productsOf(team){return products.filter(p=>p.owner===team)}
 function count(n){return n.kids.reduce((a,k)=>a+1+count(k),0)}
 function build(n,depth){
   const el=document.createElement('div');
@@ -95,10 +137,18 @@ function build(n,depth){
   el.dataset.type=type;el.dataset.depth=depth;
   el.style.setProperty('--c','var('+TYPES[type][1]+')');
   const h=document.createElement('div');h.className='head';
-  h.innerHTML=`<span class="chev">${n.kids.length?'▾':''}</span><span class="title"></span>${n.note?'<span class="note"></span>':''}<span class="badge">${TYPES[type][0]}</span>${n.kids.length?`<span class="count">${count(n)}</span>`:''}`;
+  const owned=productsOf(n.title);
+  h.innerHTML=`<span class="chev">${n.kids.length?'▾':''}</span><span class="title"></span>${n.note?'<span class="note"></span>':''}<span class="badge">${TYPES[type][0]}</span>${owned.length?'<span class="pc"></span>':''}${n.kids.length?`<span class="count">${count(n)}</span>`:''}`;
   h.querySelector('.title').textContent=n.title;
   if(n.note)h.querySelector('.note').textContent='– '+n.note;
   el.appendChild(h);
+  if(owned.length){
+    const pc=h.querySelector('.pc');pc.textContent=owned.length+(owned.length>1?' products':' product');
+    const pl=document.createElement('div');pl.className='prods hide';
+    owned.forEach(p=>{const s=document.createElement('span');s.textContent=p.product;pl.appendChild(s);});
+    pc.onclick=e=>{e.stopPropagation();pl.classList.toggle('hide');};
+    el.appendChild(pl);
+  }
   if(n.kids.length){
     const k=document.createElement('div');k.className='kids';
     n.kids.forEach(c=>k.appendChild(build(c,depth+1)));
@@ -113,6 +163,7 @@ function render(){
   try{parse(text).forEach(n=>root.appendChild(build(n,1)));$('#err').textContent='';}
   catch(e){$('#err').textContent=e.message;return;}
   showLevel(2);applyFilters();
+  if(view==='product')highlight(products[sel]);
 }
 function showLevel(l){document.querySelectorAll('.node.has-kids').forEach(el=>setCollapsed(el,+el.dataset.depth>=l));}
 function applyFilters(){
@@ -131,6 +182,60 @@ function applyFilters(){
     document.querySelectorAll('#root>.node').forEach(vis);
   }
 }
+function clearHL(){document.querySelectorAll('.node.hl,.node.sup').forEach(n=>n.classList.remove('hl','sup'));}
+function findNode(name){return [...document.querySelectorAll('#root .node')].find(n=>n.querySelector(':scope>.head>.title').textContent===name)||null;}
+function highlight(p){
+  clearHL();
+  if(!p)return;
+  const mark=(name,cls)=>{
+    const el=findNode(name);if(!el)return;
+    el.classList.add(cls);
+    for(let a=el.parentElement.closest('.node');a;a=a.parentElement.closest('.node'))setCollapsed(a,false);
+  };
+  mark(p.owner,'hl');
+  if(p.champion&&p.champion!=='TBD')mark(p.champion,'sup');
+}
+function renderProducts(){
+  const tb=$('#ptable tbody');tb.innerHTML='';
+  products.forEach((p,i)=>{
+    const tr=document.createElement('tr');
+    ['product','owner','tier','champion','hosting','notes'].forEach(k=>{const td=document.createElement('td');td.textContent=p[k];tr.appendChild(td);});
+    tr.onclick=()=>selectProduct(i);
+    tb.appendChild(tr);
+  });
+}
+function filterProducts(){
+  const q=$('#pq').value.trim().toLowerCase();
+  document.querySelectorAll('#ptable tbody tr').forEach((tr,j)=>{
+    const p=products[j];
+    const hit=!q||Object.values(p).join(' ').toLowerCase().includes(q);
+    tr.classList.toggle('hide',!hit);
+  });
+}
+function markRows(pred){document.querySelectorAll('#ptable tbody tr').forEach((tr,j)=>tr.classList.toggle('sel',pred(products[j],j)));}
+function selectProduct(i){
+  sel=i===sel?null:i;
+  markRows((p,j)=>j===sel);
+  highlight(products[sel]);
+}
+function selectTeam(name){
+  sel=null;
+  clearHL();
+  markRows(p=>p.owner===name);
+  const el=findNode(name);
+  if(el)el.classList.add('hl');
+}
+function fitHeader(){document.documentElement.style.setProperty('--hdr',$('header').offsetHeight+'px');}
+function setView(v){
+  view=v;
+  document.body.dataset.view=v;
+  fitHeader();
+  $('#prodview').style.display=v==='product'?'block':'none';
+  $('#vOrg').classList.toggle('on',v==='org');
+  $('#vProd').classList.toggle('on',v==='product');
+  if(v==='org'){sel=null;clearHL();markRows(()=>false);}
+  else highlight(products[sel]);
+}
 function init(){
   $('#legend').innerHTML=Object.entries(TYPES).map(([k,v])=>`<label><input type="checkbox" value="${k}" checked><span class="sw" style="background:var(${v[1]})"></span>${v[0]}</label>`).join('');
   $('#legend').onchange=applyFilters;
@@ -138,11 +243,23 @@ function init(){
   $('#expandAll').onclick=()=>showLevel(99);
   $('#collapseAll').onclick=()=>showLevel(1);
   document.querySelectorAll('[data-lvl]').forEach(b=>b.onclick=()=>showLevel(+b.dataset.lvl));
+  $('#root').addEventListener('click',e=>{
+    if(view!=='product')return;
+    const h=e.target.closest('.head');if(!h)return;
+    const name=h.querySelector('.title').textContent;
+    if(productsOf(name).length)selectTeam(name);
+  });
+  window.addEventListener('resize',fitHeader);
+  fitHeader();
+  $('#pq').oninput=filterProducts;
+  $('#vOrg').onclick=()=>setView('org');
+  $('#vProd').onclick=()=>setView('product');
   $('#editBtn').onclick=()=>{const e=$('#edit');e.style.display=e.style.display==='block'?'none':'block';};
   $('#src').oninput=e=>{text=e.target.value;render();};
   $('#dl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/markdown'}));a.download='org.md';a.click();};
+  const prodP=fetch('products.md',{cache:'no-store'}).then(r=>r.ok?r.text():'').catch(()=>'');
   fetch('org.md',{cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.text()})
-    .then(t=>{text=t;$('#src').value=t;render();})
+    .then(async t=>{text=t;$('#src').value=t;products=parseProducts(await prodP);renderProducts();render();})
     .catch(()=>{$('#root').innerHTML='<p>Could not load <code>org.md</code>. If you opened this file directly, serve the folder instead (<code>python3 -m http.server</code>) or view it on GitHub Pages.</p>';});
 }
 init();
