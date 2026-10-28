@@ -88,8 +88,51 @@
   - Leadership | Lead, Systems Engineer, Portfolio Lead, System-Level Scrum Master {role}
   - UI/UX Team | within Enterprise Services leadership {team}
   - Core Tools and Services {team}
-    - I&A (Ingest & Archive) | Cumulus, Earthdata Pub, Cloud Upload Environment, data quality/preservation {team}
-      - Sub-teams (e.g., Data Operations, Cumulus Core, Task Team) | to be added {gap}
+    - I&A (Ingest & Archive) | Cumulus/C-Cumulus, Earthdata Pub, Cloud Upload Environment, data quality/preservation; SAFe I&A Train; per I&A Team Structure v1.1 (Final, April 2026) {team}
+      - Leadership Team | central strategic, planning, operational governance for all I&A activities {team}
+        - I&A Services Lead | I&A Train ESDIS Value Stream Owner; new position; reports to ESDIS PM through FY26, then ESDIS Science Data Systems Lead {role}
+        - Operations Manager | was "Operations Lead"; owns data/system ops, ingest workflows, archive mgmt, C-Cumulus ecosystem; new position; reports to I&A Services Lead {role}
+        - Systems Engineer | technical integrity, requirements/V&V, ICDs; new position; reports to I&A Services Lead {role}
+        - Product Manager | I&A Train Product Manager; "Voice of the Customer"; existing I&A Train position; member of SAFe I&A Train Triad {role}
+        - Release Train Engineer (RTE) | servant leader/coach for I&A Train; existing I&A Train position; member of SAFe I&A Train Triad {role}
+        - Architect | I&A Train Architect; technical vision, standards, interfaces; existing I&A Train position; member of SAFe I&A Train Triad {role}
+      - Cumulus Core Team | C-Cumulus platform: infra, core software/APIs, data backup/preservation, distribution, CI/CD, system sustainment; part of SAFe I&A Train; EED contract accountable for this team's work; coordinates closely with Data Operations and Cumulus Task Team {team}
+        - Product Owner | must be staffed by EED; team must follow EED processes; reports to I&A Product Manager {role}
+        - Scrum Master {role}
+        - Developer | functional role; one person may hold multiple roles {role}
+        - Cloud-Infrastructure Engineer | functional role {role}
+        - CI/CD & Test Engineer | functional role {role}
+        - System Operator | functional role {role}
+        - Database Engineer | functional role {role}
+      - Dashboard/Operator Experience Team | (IN WORK) Cumulus Dashboard + common ops scripts/automation via Cumulus API; part of SAFe I&A Train; EED contract accountable; new team, split out post-consolidation (1 Oct 2026) {team}
+        - Product Owner | must be staffed by EED; team must follow EED processes; reports to I&A Product Manager {role}
+        - Scrum Master {role}
+        - Developer | functional role {role}
+        - UI/UX Developer | functional role {role}
+        - Test Engineer | functional role {role}
+        - System Operator | functional role {role}
+      - Cumulus Task Team | full lifecycle of reusable Cumulus Tasks (ingest/archive workflow "building blocks"); part of SAFe I&A Train; EED not directly accountable; Tier-2 resolution when ingest failures trace to a Task; coordinates closely with Data Operations and Cumulus Core {team}
+        - Product Owner | reports to I&A Product Manager {role}
+        - Scrum Master {role}
+        - Task Developer | functional role {role}
+        - Scientific Programmer | functional role; bridges software engineering and Earth science domain expertise (e.g., UMM-Var, DMR++, browse imagery logic) {role}
+        - Test Engineer | functional role {role}
+      - Data Operations Teams | development, configuration, execution, and lifecycle mgmt of ingest/archive Cumulus Workflows; 3 teams grouped by DAAC; coordinates with Cumulus Core, Cumulus Task Team, DAAC Mission Data Team, Data Provider {team}
+        - Team 1 | ASDC, GHRC, OB.DAAC, ORNL, PO.DAAC {team}
+          - Data Operations Team Lead | primary technical POC for Mission Data Leads/Data Producers; reports to Operations Manager {role}
+          - Developer | functional role {role}
+          - Ingest Operator | functional role {role}
+          - Archive Operator | functional role {role}
+        - Team 2 | ASF, GES DISC {team}
+          - Data Operations Team Lead | primary technical POC for Mission Data Leads/Data Producers; reports to Operations Manager {role}
+          - Developer | functional role {role}
+          - Ingest Operator | functional role {role}
+          - Archive Operator | functional role {role}
+        - Team 3 | LAADS, LP DAAC, NSIDC {team}
+          - Data Operations Team Lead | primary technical POC for Mission Data Leads/Data Producers; reports to Operations Manager {role}
+          - Developer | functional role {role}
+          - Ingest Operator | functional role {role}
+          - Archive Operator | functional role {role}
     - Discovery and Distribution | Harmony, AppEEARS, Vertex, LANCE, Earthdata Search, Earthdata Login, CMR {team}
       - Sub-teams | to be added {gap}
     - Visualization | Worldview/GIBS, EGIS, FIRMS {team}
@@ -101,6 +144,5 @@
 
 - Outside ESDIS (referenced in PMP) {ext}
   - FDP - Foundational Data Product | takes over SIPS; DPM-S is its PM {ext}
-  - EED-3 | enterprise engineering contract {ext}
   - ESDS Connections / Digital Strategy and User Development {ext}
   - Earth Action, ESSRP program scientists, NASA ARSET, Mission Science Teams {ext}
