@@ -8,8 +8,8 @@
 | Cumulus (C-Cumulus) | Cumulus Core Team | TBD | Platform: infra, core software/APIs, distribution |
 | Cumulus Dashboard | Dashboard/Operator Experience Team | TBD | In work; ops scripts and automation via Cumulus API |
 | Cumulus Tasks | Cumulus Task Team | TBD | Reusable ingest/archive workflow building blocks |
-| Earthdata Pub | I&A (Ingest & Archive) | TBD | Publication of ingested data |
-| Cloud Upload Environment | I&A (Ingest & Archive) | TBD | |
+| Earthdata Pub | I&A (Ingest & Archive) | Data Stewardship | Publication of ingested data |
+| Cloud Upload Environment | I&A (Ingest & Archive) | Data Stewardship | |
 | Harmony | Discovery and Distribution | TBD | |
 | AppEEARS | Discovery and Distribution | TBD | |
 | Vertex | Discovery and Distribution | TBD | |
