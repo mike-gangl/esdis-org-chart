@@ -3,7 +3,7 @@
 - ESDIS Project Office | GSFC Flight Projects Directorate; reports to NASA HQ ESDS Program {unit}
   - Project Manager (GSFC) {role}
   - Enterprise Project Scientist {role}
-  - Deputy PM for Systems (DPM-S) | also PM of FDP; leads risk, opportunities, architecture {role}
+  - Deputy PM for Systems (DPM-S) | leads risk, opportunities, architecture {role}
   - Deputy PM for Resources (DPM-R) | supervises Finance; manages project admin support {role}
   - Administration team {team}
   - Finance team {team}
@@ -100,7 +100,7 @@
   - Leadership | Lead, Systems Engineer, Portfolio Lead, System-Level Scrum Master {role}
   - UI/UX Team | within Enterprise Services leadership {team}
   - Core Tools and Services {team}
-    - I&A (Ingest & Archive) | Cumulus/C-Cumulus, Earthdata Pub, Cloud Upload Environment, data quality/preservation; SAFe I&A Train; per I&A Team Structure v1.1 (Final, April 2026) {team}
+    - I&A (Ingest & Archive) | Cumulus/C-Cumulus, Earthdata Pub, Cloud Upload Environment, data quality/preservation; SAFe I&A Train; {team}
       - Leadership Team | central strategic, planning, operational governance for all I&A activities {team}
         - I&A Services Lead | I&A Train ESDIS Value Stream Owner; new position; reports to ESDIS PM through FY26, then ESDIS Science Data Systems Lead {role}
         - Operations Manager | was "Operations Lead"; owns data/system ops, ingest workflows, archive mgmt, C-Cumulus ecosystem; new position; reports to I&A Services Lead {role}
