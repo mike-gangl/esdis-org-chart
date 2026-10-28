@@ -54,35 +54,48 @@
     - Openscapes Team Lead {role}
   - ASSETs | aligned to ESSRP spheres {team}
     - Atmosphere ASSET {team}
-    - Hydrosphere ASSET | PO.DAAC 100%; GES DISC 40%; GHRC 30% {team}
-    - Cryosphere ASSET {team}
-    - Biosphere ASSET {team}
-    - Geosphere ASSET {team}
-    - X-ASSET (SAR + Geodesy) | own Science and User Needs teams; equal standing {team}
-    - Inside every ASSET
       - ASSET Lead | programmatic management; nominates Science Council rep {role}
       - Science Data Support (ASSET Science Team) | Scientific Guidance, External SE, Internal Science Support {team}
       - User Needs / User Support (ASSET User Support Team) | help desk, Forum, requirements capture, use cases {team}
       - ASSET User Working Group (UWG) | biannual meetings {wg}
-  - Cross-ASSET groups
-    - ASSET Science Council | formerly DAAC Scientist Council {council}
-    - User Needs Team {team}
-    - Consolidated User Support Team | cross-ASSET enterprise support, outside the ASSETs {team}
-    - ESDIS Connect | liaison to ESDS Connections {team}
-      - Coordination {role}
-      - User Development Materials {role}
-      - Content Quality {role}
-      - Support & Enablement {role}
-      - Continuous Improvement {role}
-    - Openscapes Team | administratively in Science Enablement {team}
-      - Championing open science {role}
-      - Breaking down silos {role}
-      - Guiding open governance (earthaccess model) {role}
-  - Events and cadence
-    - Earthdata UWG Summit | annual {wg}
-    - ASSET town halls | biannual {wg}
-    - Stakeholder meetings | 2+ per ASSET per year {wg}
-  - Value-added products | stay in ASSETs; annual list to FDP {role}
+    - Hydrosphere ASSET | PO.DAAC 100%; GES DISC 40%; GHRC 30% {team}
+      - ASSET Lead | programmatic management; nominates Science Council rep {role}
+      - Science Data Support (ASSET Science Team) | Scientific Guidance, External SE, Internal Science Support {team}
+      - User Needs / User Support (ASSET User Support Team) | help desk, Forum, requirements capture, use cases {team}
+      - ASSET User Working Group (UWG) | biannual meetings {wg}
+    - Cryosphere ASSET {team}
+      - ASSET Lead | programmatic management; nominates Science Council rep {role}
+      - Science Data Support (ASSET Science Team) | Scientific Guidance, External SE, Internal Science Support {team}
+      - User Needs / User Support (ASSET User Support Team) | help desk, Forum, requirements capture, use cases {team}
+      - ASSET User Working Group (UWG) | biannual meetings {wg}
+    - Biosphere ASSET {team}
+      - ASSET Lead | programmatic management; nominates Science Council rep {role}
+      - Science Data Support (ASSET Science Team) | Scientific Guidance, External SE, Internal Science Support {team}
+      - User Needs / User Support (ASSET User Support Team) | help desk, Forum, requirements capture, use cases {team}
+      - ASSET User Working Group (UWG) | biannual meetings {wg}
+    - Geosphere ASSET {team}
+      - ASSET Lead | programmatic management; nominates Science Council rep {role}
+      - Science Data Support (ASSET Science Team) | Scientific Guidance, External SE, Internal Science Support {team}
+      - User Needs / User Support (ASSET User Support Team) | help desk, Forum, requirements capture, use cases {team}
+      - ASSET User Working Group (UWG) | biannual meetings {wg}
+    - X-ASSET (SAR + Geodesy) | own Science and User Needs teams; equal standing {team}
+      - ASSET Lead | programmatic management; nominates Science Council rep {role}
+      - Science Data Support (ASSET Science Team) | Scientific Guidance, External SE, Internal Science Support {team}
+      - User Needs / User Support (ASSET User Support Team) | help desk, Forum, requirements capture, use cases {team}
+      - ASSET User Working Group (UWG) | biannual meetings {wg}
+  - ASSET Science Council | formerly DAAC Scientist Council {council}
+  - User Needs Team {team}
+  - Consolidated User Support Team | cross-ASSET enterprise support, outside the ASSETs {team}
+  - ESDIS Connect | liaison to ESDS Connections {team}
+    - Coordination {role}
+    - User Development Materials {role}
+    - Content Quality {role}
+    - Support & Enablement {role}
+    - Continuous Improvement {role}
+  - Openscapes Team | administratively in Science Enablement {team}
+    - Championing open science {role}
+    - Breaking down silos {role}
+    - Guiding open governance (earthaccess model) {role}
 
 - Enterprise Services | Agile / SAFe; Enterprise Tools Repository; TDE workflow {unit}
   - Leadership | Lead, Systems Engineer, Portfolio Lead, System-Level Scrum Master {role}
