@@ -172,7 +172,17 @@ function applyFilters(){
   const nodes=[...document.querySelectorAll('.node')];
   nodes.forEach(n=>n.classList.remove('hide'));
   document.querySelectorAll('mark').forEach(m=>m.replaceWith(m.textContent));
-  nodes.forEach(n=>{if(off.has(n.dataset.type))n.classList.add('hide');});
+  // A node stays if it is a unit, its type is checked, or something under it stays.
+  // Unchecked-type nodes that stay are shown only as context for a kept descendant.
+  const filtering=off.size>0;
+  const keep=n=>{
+    const k=[...n.querySelectorAll(':scope>.kids>.node')].map(keep).some(Boolean);
+    const me=n.dataset.type==='unit'||!off.has(n.dataset.type);
+    if(!me&&!k)n.classList.add('hide');
+    if(k&&filtering)setCollapsed(n,false);
+    return me||k;
+  };
+  document.querySelectorAll('#root>.node').forEach(keep);
   if(q){
     const match=n=>(n.querySelector(':scope>.head .title').textContent+' '+(n.querySelector(':scope>.head .note')?.textContent||'')).toLowerCase().includes(q);
     const vis=n=>{const kids=[...n.querySelectorAll(':scope>.kids>.node')];const k=kids.map(vis).some(Boolean);const me=match(n);
@@ -237,8 +247,11 @@ function setView(v){
   else highlight(products[sel]);
 }
 function init(){
-  $('#legend').innerHTML=Object.entries(TYPES).map(([k,v])=>`<label><input type="checkbox" value="${k}" checked><span class="sw" style="background:var(${v[1]})"></span>${v[0]}</label>`).join('');
+  $('#legend').innerHTML='<button id="selAll">Select all</button><button id="deselAll">Deselect all</button>'+Object.entries(TYPES).filter(([k])=>k!=='unit').map(([k,v])=>`<label><input type="checkbox" value="${k}" checked><span class="sw" style="background:var(${v[1]})"></span>${v[0]}</label>`).join('');
   $('#legend').onchange=applyFilters;
+  const setAllTypes=on=>{document.querySelectorAll('#legend input').forEach(i=>i.checked=on);applyFilters();};
+  $('#selAll').onclick=()=>setAllTypes(true);
+  $('#deselAll').onclick=()=>setAllTypes(false);
   $('#q').oninput=applyFilters;
   $('#expandAll').onclick=()=>showLevel(99);
   $('#collapseAll').onclick=()=>showLevel(1);
