@@ -90,7 +90,7 @@
   <section id="prodview" style="display:none">
     <input type="search" id="pq" placeholder="Filter products..." style="width:100%;margin-bottom:8px">
     <table id="ptable">
-      <thead><tr><th>Product</th><th>Owning team</th><th>Tier</th><th>Champion</th><th>Hosting</th><th>Notes</th></tr></thead>
+      <thead><tr><th>Product</th><th>Owning team</th><th>Champion</th><th>Notes</th></tr></thead>
       <tbody></tbody>
     </table>
     <div class="note">Click a product to highlight its owning team (gold) and champion (teal) in the tree. Click a team's product count in Org view to list its products.</div>
@@ -125,7 +125,7 @@ function parse(t){
 }
 function parseProducts(t){
   const rows=t.split('\n').filter(l=>l.trim().startsWith('|')).map(l=>l.trim().replace(/^\||\|$/g,'').split('|').map(c=>c.trim()));
-  const keys=['product','owner','tier','champion','hosting','notes'];
+  const keys=['product','owner','champion','notes'];
   return rows.slice(1).filter(r=>!r.every(c=>/^:?-+:?$/.test(c))).map(r=>Object.fromEntries(keys.map((k,i)=>[k,r[i]||''])));
 }
 function productsOf(team){return products.filter(p=>p.owner===team)}
@@ -199,7 +199,7 @@ function renderProducts(){
   const tb=$('#ptable tbody');tb.innerHTML='';
   products.forEach((p,i)=>{
     const tr=document.createElement('tr');
-    ['product','owner','tier','champion','hosting','notes'].forEach(k=>{const td=document.createElement('td');td.textContent=p[k];tr.appendChild(td);});
+    ['product','owner','champion','notes'].forEach(k=>{const td=document.createElement('td');td.textContent=p[k];tr.appendChild(td);});
     tr.onclick=()=>selectProduct(i);
     tb.appendChild(tr);
   });
