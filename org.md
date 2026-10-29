@@ -1,6 +1,7 @@
-# Syntax: indent 2 spaces per level.  "- Title | note {type}"
+# Syntax: indent 2 spaces per level.  "- Title | note {type} (docs/file.md)"
 # Types: unit, team, council, wg, role, ext, gap (placeholder / to be added). Lines starting with # are comments.
-- ESDIS Project Office | GSFC Flight Projects Directorate; reports to NASA HQ ESDS Program {unit}
+# Optional trailing "(docs/file.md)" links the node's title to an OKF doc describing it in more depth.
+- ESDIS Project Office | GSFC Flight Projects Directorate; reports to NASA HQ ESDS Program {unit} (docs/esdis-project-office.md)
   - Project Manager (GSFC) {role}
   - Enterprise Project Scientist {role}
   - Deputy PM for Systems (DPM-S) | leads risk, opportunities, architecture {role}
@@ -14,16 +15,16 @@
       - Members | Data Stewardship (Mission Engagement, Metadata Stewardship), SE Lead Scientist, Systems Engineering, User Support, Openscapes, Enterprise Services, ASSET Tool Reps {role}
     - Ad Hoc Working Groups | need sub-org champion + PM approval; fewer than 8 members {wg}
     - Enterprise Portfolio Board | referenced for funding proposals; not described in PMP {gap}
-    - Change Control Board (CCB) | referenced in PMP document table; not described {gap}
 
-- Systems Engineering | ESDIS Systems and Software Engineering Team (ESSET) {unit}
+- Systems Engineering | ESDIS Systems and Software Engineering Team (ESSET) {unit} (docs/systems-engineering.md)
   - Software Systems Engineer {role}
   - Systems Architect {role}
   - AI Architect {role}
   - Science Systems Engineer | liaison to ASSETs and Data Stewardship {role}
   - Other SE staff (V&V, Project SE, I&A SE) | to be added {gap}
+  - Change Control Board (CCB) | referenced in PMP document table; not described {gap}
 
-- Data Stewardship {unit}
+- Data Stewardship {unit} (docs/data-stewardship.md)
   - Leadership | Stewardship Lead (co-lead), Data Governance Lead, Mission Lifecycle Coordinator, Data Producer Support Coordinator {role}
   - Data Lifecycle Management | teams mirror the ASSETs / ESSRP spheres {team}
     - Mission Engagement {team}
@@ -43,7 +44,7 @@
     - Needs-Driven Support {role}
     - Long-Term Data Stewardship {role}
 
-- Science Enablement | External SE, User Needs, User Support, Internal Enterprise Science Support {unit}
+- Science Enablement | External SE, User Needs, User Support, Internal Enterprise Science Support {unit} (docs/science-enablement.md)
   - Leadership Team (6) {team}
     - Science Enablement Lead | chairs ASSET Science Council {role}
     - Science Enablement Lead Scientist {role}
@@ -96,7 +97,7 @@
     - Breaking down silos {role}
     - Guiding open governance (earthaccess model) {role}
 
-- Enterprise Services | Agile / SAFe; Enterprise Tools Repository; TDE workflow {unit}
+- Enterprise Services | Agile / SAFe; Enterprise Tools Repository; TDE workflow {unit} (docs/enterprise-services.md)
   - Leadership | Lead, Systems Engineer, Portfolio Lead, System-Level Scrum Master {role}
   - UI/UX Team | within Enterprise Services leadership {team}
   - Core Tools and Services {team}
