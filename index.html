@@ -146,7 +146,7 @@ function build(n,depth){
   const titleEl=h.querySelector('.title');
   if(n.doc){
     const a=document.createElement('a');
-    a.href=n.doc;a.target='_blank';a.rel='noopener';a.textContent=n.title;
+    a.href=n.doc.replace(/\.md$/,'.html');a.target='_blank';a.rel='noopener';a.textContent=n.title;
     a.onclick=e=>e.stopPropagation();
     titleEl.appendChild(a);
     titleEl.classList.add('has-doc');
